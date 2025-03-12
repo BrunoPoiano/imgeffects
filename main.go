@@ -1,5 +1,0 @@
-package imgeffects
-
-func main() {
-
-}
