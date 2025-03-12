@@ -6,6 +6,13 @@ import (
 	"math"
 )
 
+// HSLToRGB converts an HSL color (with 16-bit values per channel) into RGB (red, green, blue).
+//
+// Parameters:
+//   - h, s, l: The hue, saturation, and luminance components of the color.
+//
+// Returns:
+//   - r, g, b: The red, green, and blue components of the color (0-65535).
 func HSLToRGB(h, s, l float64) (r, g, b uint32) {
 	var fr, fg, fb float64
 
@@ -35,6 +42,15 @@ func HSLToRGB(h, s, l float64) (r, g, b uint32) {
 	return r, g, b
 }
 
+// RGBToHSL converts an RGB color (with 16-bit values per channel) into HSL (hue, saturation, luminance).
+//
+// Parameters:
+//   - r, g, b: The red, green, and blue components of the color (0-65535).
+//
+// Returns:
+//   - h: Hue (0-360 degrees).
+//   - s: Saturation (0.0-1.0).
+//   - l: Luminance (0.0-1.0).
 func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 	fr := float64(r) / 65535.0
 	fg := float64(g) / 65535.0
@@ -68,6 +84,14 @@ func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 	return h, s, l
 }
 
+// Hue converts an image by the change(Hue) specified.
+//
+// Parameters:
+//   - image
+//   - change (0-360 degrees)
+//
+// Returns:
+//   - A new image.Image
 func Hue(img image.Image, change int) image.Image {
 
 	bounds := img.Bounds()
@@ -88,6 +112,14 @@ func Hue(img image.Image, change int) image.Image {
 
 }
 
+// Saturation converts an image by the change(Saturation) specified.
+//
+// Parameters:
+//   - image
+//   - change -1.0 to 1.0
+//
+// Returns:
+//   - A new image.Image
 func Saturation(img image.Image, change float64) image.Image {
 
 	bounds := img.Bounds()
@@ -109,6 +141,14 @@ func Saturation(img image.Image, change float64) image.Image {
 
 }
 
+// Luminance converts an image by the change(Luminance) specified.
+//
+// Parameters:
+//   - image
+//   - change -1.0 to 1.0
+//
+// Returns:
+//   - A new image.Image
 func Luminance(img image.Image, change float64) image.Image {
 
 	bounds := img.Bounds()

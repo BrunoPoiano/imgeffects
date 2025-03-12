@@ -24,7 +24,7 @@ import (
 //   - level: The number of quantization levels (1 - 10).
 //
 // Returns:
-//   - A new image.Image with the dithering effect applied.
+//   - A new image.Image.
 func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.Image {
 	quantize := func(value uint8, levels int) (uint8, int) {
 		scale := 255.0 / float64(levels-1)
@@ -163,7 +163,7 @@ func makeDither(img *image.RGBA, x, y int, r, g, b, a int, factor float64) {
 //   - size: The size of the dithering matrix (must be multiple of 2).
 //
 // Returns:
-//   - A new image.Image with the dithering effect applied.
+//   - A new image.Image.
 func OrderedDithering(img image.Image, level, size int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)

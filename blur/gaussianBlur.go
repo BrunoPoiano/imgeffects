@@ -30,7 +30,7 @@ func createKernel(size int) []float64 {
 	return kernel
 }
 
-func ApplyHorizontalBlur(img image.Image, kernel []float64) *image.RGBA64 {
+func applyHorizontalBlur(img image.Image, kernel []float64) *image.RGBA64 {
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
 	result := image.NewRGBA64(bounds)
@@ -73,7 +73,7 @@ func ApplyHorizontalBlur(img image.Image, kernel []float64) *image.RGBA64 {
 	return result
 }
 
-func ApplyVerticalBlur(img image.Image, kernel []float64) *image.RGBA64 {
+func applyVerticalBlur(img image.Image, kernel []float64) *image.RGBA64 {
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
 	result := image.NewRGBA64(bounds)
@@ -116,11 +116,19 @@ func ApplyVerticalBlur(img image.Image, kernel []float64) *image.RGBA64 {
 	return result
 }
 
+// GaussianBlur apply a Gaussian blur filter to a image.
+//
+// Parameters:
+//   - image
+//   - size 0 to 20
+//
+// Returns:
+//   - A new image.Image
 func GaussianBlur(img image.Image, size int) image.Image {
 
 	kernel := createKernel(size)
-	horizontalBlur := ApplyHorizontalBlur(img, kernel)
-	newImage := ApplyVerticalBlur(horizontalBlur, kernel)
+	horizontalBlur := applyHorizontalBlur(img, kernel)
+	newImage := applyVerticalBlur(horizontalBlur, kernel)
 	return newImage
 
 }
