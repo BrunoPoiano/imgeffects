@@ -1,2 +1,2 @@
 # image-effects
-Image effects algorithms in Go
+Collection of image effects algorithms written in Go
