@@ -4,13 +4,6 @@ import (
 	"image"
 )
 
-// FlipHorizontal flips the given image horizontally, mirroring it from left to right.
-//
-// Parameters:
-//   - img: The input image to be flipped.
-//
-// Returns:
-//   - A new image.Image.
 func FlipHorizontal(img image.Image) image.Image {
 
 	bounds := img.Bounds()
@@ -28,13 +21,6 @@ func FlipHorizontal(img image.Image) image.Image {
 	return newImage
 }
 
-// FlipVertical flips the given image vertically, mirroring it from top to bottom.
-//
-// Parameters:
-//   - img: The input image to be flipped.
-//
-// Returns:
-//   - A new image.Image.
 func FlipVertical(img image.Image) image.Image {
 
 	bounds := img.Bounds()

@@ -65,14 +65,6 @@ func averageRGB(img image.Image, x1, y1, x2, y2 int) color.Color {
 	}
 }
 
-// KuwaharaFilter apply the Kuwahara filter to a image.
-//
-// Parameters:
-//   - image
-//   - size 1 to 20
-//
-// Returns:
-//   - A new image.Image
 func KuwaharaFilter(img image.Image, size int) image.Image {
 
 	bounds := img.Bounds()
