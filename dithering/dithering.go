@@ -6,6 +6,25 @@ import (
 	"math"
 )
 
+// ErrorDiffusionDithering applies an error diffusion dithering effect to an image.
+//
+// Supported algorithms:
+//   - floyd-steinberg
+//   - false-floyd-steinberg
+//   - jarvis-judice-ninke
+//   - stucki
+//   - atkinson
+//   - sierra
+//   - two-row-seirra
+//   - sierra-lite
+//
+// Parameters:
+//   - img: The input image
+//   - algorithm: The name of the dithering algorithm to use
+//   - level: The number of quantization levels (1 - 10)
+//
+// Returns:
+//   - A new image.Image with the dithering effect applied
 func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.Image {
 	quantize := func(value uint8, levels int) (uint8, int) {
 		scale := 255.0 / float64(levels-1)
@@ -136,6 +155,15 @@ func makeDither(img *image.RGBA, x, y int, r, g, b, a int, factor float64) {
 	}
 }
 
+// OrderedDithering applies an ordered dithering effect to an image.
+//
+// Parameters:
+//   - img: The input image
+//   - level: The number of quantization levels (1 - 10)
+//   - size: The size of the dithering matrix (must be multiple of 2)
+//
+// Returns:
+//   - A new image.Image with the dithering effect applied
 func OrderedDithering(img image.Image, level, size int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)

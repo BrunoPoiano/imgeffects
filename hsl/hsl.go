@@ -68,6 +68,14 @@ func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 	return h, s, l
 }
 
+// AdjustHue changes the hue of an image.
+//
+// Parameters:
+//   - img: The input image
+//   - change: Hue shift in degrees (0-360)
+//
+// Returns:
+//   - A new image.Image with the hue adjustment applied
 func Hue(img image.Image, change int) image.Image {
 
 	bounds := img.Bounds()
@@ -88,6 +96,14 @@ func Hue(img image.Image, change int) image.Image {
 
 }
 
+// AdjustSaturation changes the saturation of an image.
+//
+// Parameters:
+//   - img: The input image
+//   - change: Saturation adjustment (-1.0 to 1.0)
+//
+// Returns:
+//   - A new image.Image with the saturation adjustment applied
 func Saturation(img image.Image, change float64) image.Image {
 
 	bounds := img.Bounds()
@@ -109,6 +125,14 @@ func Saturation(img image.Image, change float64) image.Image {
 
 }
 
+// AdjustLuminance changes the luminance of an image.
+//
+// Parameters:
+//   - img: The input image
+//   - change: Luminance adjustment (-1.0 to 1.0)
+//
+// Returns:
+//   - A new image.Image with the luminance adjustment applied
 func Luminance(img image.Image, change float64) image.Image {
 
 	bounds := img.Bounds()
