@@ -24,7 +24,7 @@ import (
 //   - level: The number of quantization levels (1 - 10)
 //
 // Returns:
-//   - A new image.Image with the dithering effect applied
+//   - image.Image
 func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.Image {
 	quantize := func(value uint8, levels int) (uint8, int) {
 		scale := 255.0 / float64(levels-1)

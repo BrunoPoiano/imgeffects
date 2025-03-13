@@ -10,7 +10,7 @@ func clamp(value, minVal, maxVal int) int {
 	return int(math.Max(float64(minVal), math.Min(float64(value), float64(maxVal))))
 }
 
-func rgbToHSV(c color.Color) float64 {
+func RGBToHSV(c color.Color) float64 {
 	r, g, b, _ := c.RGBA()
 	rf := float64(r) / 65535.0
 	gf := float64(g) / 65535.0
@@ -72,7 +72,7 @@ func averageRGB(img image.Image, x1, y1, x2, y2 int) color.Color {
 //   - size: Filter size from 1 to 20
 //
 // Returns:
-//   - A new image.Image with the Kuwahara filter applied
+//   - image.Image
 func KuwaharaFilter(img image.Image, size int) image.Image {
 
 	bounds := img.Bounds()
@@ -115,7 +115,7 @@ func KuwaharaFilter(img image.Image, size int) image.Image {
 				var values []float64
 				for yy := quad.y1; yy < quad.y2; yy++ {
 					for xx := quad.x1; xx < quad.x2; xx++ {
-						values = append(values, rgbToHSV(img.At(xx, yy)))
+						values = append(values, RGBToHSV(img.At(xx, yy)))
 					}
 				}
 

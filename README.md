@@ -22,14 +22,14 @@ go get github.com/BrunoPoiano/imgeffects
 ### Flip Operations
 - `FlipHorizontal`
 ![flipHorizontal](https://github.com/user-attachments/assets/fb1f5dc9-f33c-445c-9403-c0f676f894b5)
-  
+
 - `FlipVertical`
 ![flipVertical](https://github.com/user-attachments/assets/15ff1b8b-baa6-41cd-b976-858da0f261ab)
 
 
 ### HSL Adjustments
 - `Hue` - 0-360 degrees
-![hue](https://github.com/user-attachments/assets/5fa805ea-3c5c-4f73-a92b-c3e718096e9f) 
+![hue](https://github.com/user-attachments/assets/5fa805ea-3c5c-4f73-a92b-c3e718096e9f)
 
 - `Saturation` - -1.0 to 1.0
 ![saturation](https://github.com/user-attachments/assets/803800d7-fd4a-4dbc-addf-03c1874a4dfc)
@@ -41,6 +41,12 @@ go get github.com/BrunoPoiano/imgeffects
 ### Filters
 - `KuwaharaFilter` - 1-20
 ![kawahara](https://github.com/user-attachments/assets/23329558-ab98-4998-8c60-a37ef0a3251c)
+
+## HelperFunctions
+- `hsl.HSLToRGB`
+- `hsl.RGBToHSL`
+- `kuwahara.RGBToHSV`
+- `resize.NewAspectRatio`
 
 ## License
 

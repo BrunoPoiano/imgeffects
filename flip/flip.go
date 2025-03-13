@@ -10,7 +10,7 @@ import (
 //   - img: The input image
 //
 // Returns:
-//   - A new image.Image with the horizontal flip applied
+//   - image.Image
 func FlipHorizontal(img image.Image) image.Image {
 
 	bounds := img.Bounds()
@@ -34,7 +34,7 @@ func FlipHorizontal(img image.Image) image.Image {
 //   - img: The input image
 //
 // Returns:
-//   - A new image.Image with the vertical flip applied
+//   - image.Image
 func FlipVertical(img image.Image) image.Image {
 
 	bounds := img.Bounds()

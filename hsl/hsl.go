@@ -6,6 +6,13 @@ import (
 	"math"
 )
 
+// HSLToRGB converts HSL values to RGB.
+//
+// Parameters:
+//   - h, s, l float64
+//
+// Returns:
+//   - r, g, b uint32
 func HSLToRGB(h, s, l float64) (r, g, b uint32) {
 	var fr, fg, fb float64
 
@@ -35,6 +42,13 @@ func HSLToRGB(h, s, l float64) (r, g, b uint32) {
 	return r, g, b
 }
 
+// RGBToHSL converts RGB values to HSL.
+//
+// Parameters:
+//   - r, g, b uint32
+//
+// Returns:
+//   - h, s, l float64
 func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 	fr := float64(r) / 65535.0
 	fg := float64(g) / 65535.0
@@ -75,7 +89,7 @@ func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 //   - change: Hue shift in degrees (0-360)
 //
 // Returns:
-//   - A new image.Image with the hue adjustment applied
+//   - image.Image
 func Hue(img image.Image, change int) image.Image {
 
 	bounds := img.Bounds()
@@ -103,7 +117,7 @@ func Hue(img image.Image, change int) image.Image {
 //   - change: Saturation adjustment (-1.0 to 1.0)
 //
 // Returns:
-//   - A new image.Image with the saturation adjustment applied
+//   - image.Image
 func Saturation(img image.Image, change float64) image.Image {
 
 	bounds := img.Bounds()
@@ -132,7 +146,7 @@ func Saturation(img image.Image, change float64) image.Image {
 //   - change: Luminance adjustment (-1.0 to 1.0)
 //
 // Returns:
-//   - A new image.Image with the luminance adjustment applied
+//   - image.Image
 func Luminance(img image.Image, change float64) image.Image {
 
 	bounds := img.Bounds()
