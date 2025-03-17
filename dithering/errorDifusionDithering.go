@@ -127,9 +127,6 @@ func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.
 				makeDither(image, x, y+1, errR, errG, errB, errA, 1.0/4)
 
 			case "none":
-				makeDither(image, x+1, y, errR, errG, errB, errA, 2.0/4)
-				makeDither(image, x-1, y+1, errR, errG, errB, errA, 1.0/4)
-				makeDither(image, x, y+1, errR, errG, errB, errA, 1.0/4)
 			}
 		}
 	}
