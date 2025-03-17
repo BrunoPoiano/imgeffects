@@ -41,3 +41,4 @@ func GrayScale(img image.Image) image.Image {
 		}
 	}
 	return newImage
+}

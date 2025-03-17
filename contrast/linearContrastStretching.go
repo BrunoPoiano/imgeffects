@@ -5,6 +5,13 @@ import (
 	"image/color"
 )
 
+// LinearContrastStretchingGrayscale applies the Linear Contrast Stretching algorithm to an image.
+//
+// Parameters:
+//   - img: The input image
+//
+// Returns:
+//   - image.Image in grayscale
 func LinearContrastStretchingGrayscale(img image.Image) image.Image {
 
 	bounds := img.Bounds()
@@ -40,6 +47,13 @@ func LinearContrastStretchingGrayscale(img image.Image) image.Image {
 	return newImage
 }
 
+// LinearContrastStretching applies the Linear Contrast Stretching algorithm to an image.
+//
+// Parameters:
+//   - img: The input image
+//
+// Returns:
+//   - image.Image
 func LinearContrastStretching(img image.Image) image.Image {
 
 	bounds := img.Bounds()
