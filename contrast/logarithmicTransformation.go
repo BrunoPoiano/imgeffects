@@ -4,8 +4,6 @@ import (
 	"image"
 	"image/color"
 	"math"
-	"runtime"
-	"sync"
 )
 
 // LogarithmicTransformation applies logarithmic transformation to an image.
@@ -33,39 +31,18 @@ func LogarithmicTransformation(img image.Image, variation float64) image.Image {
 		return uint16(transformed * 65535.0)
 	}
 
-	runtime.GOMAXPROCS(2)
-	var wg sync.WaitGroup
-	wg.Add(2)
-	go func() {
-		defer wg.Done()
-		for y := 0; y < bounds.Max.Y/2; y++ {
-			for x := 0; x < bounds.Max.X; x++ {
-				r, g, b, a := img.At(x, y).RGBA()
+	for y := 0; y < bounds.Max.Y; y++ {
+		for x := 0; x < bounds.Max.X; x++ {
+			r, g, b, a := img.At(x, y).RGBA()
 
-				newImage.Set(x, y, color.RGBA64{
-					calc(r),
-					calc(g),
-					calc(b),
-					uint16(a),
-				})
-			}
+			newImage.Set(x, y, color.RGBA64{
+				calc(r),
+				calc(g),
+				calc(b),
+				uint16(a),
+			})
 		}
-	}()
-	go func() {
-		defer wg.Done()
-		for y := bounds.Max.Y / 2; y < bounds.Max.Y; y++ {
-			for x := 0; x < bounds.Max.X; x++ {
-				r, g, b, a := img.At(x, y).RGBA()
+	}
 
-				newImage.Set(x, y, color.RGBA64{
-					stretch(r),
-					stretch(g),
-					stretch(b),
-					uint16(a),
-				})
-			}
-		}
-	}()
-	wg.Wait()
 	return newImage
 }

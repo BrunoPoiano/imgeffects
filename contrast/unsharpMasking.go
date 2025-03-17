@@ -3,8 +3,6 @@ package contrast
 import (
 	"image"
 	"image/color"
-	"runtime"
-	"sync"
 
 	"github.com/BrunoPoiano/imgeffects/blur"
 )
@@ -42,45 +40,19 @@ func UnsharpMasking(img image.Image, variation float64, blurLevel int) image.Ima
 		return clamp(result)
 	}
 
-	runtime.GOMAXPROCS(2)
-	var wg sync.WaitGroup
-	wg.Add(2)
-	go func() {
-		defer wg.Done()
-		for y := 0; y < bounds.Max.Y/2; y++ {
-			for x := 0; x < bounds.Max.X; x++ {
-				//normal Image
-				r, g, b, a := img.At(x, y).RGBA()
-				// blured Image
-				br, bg, bb, _ := bluredImage.At(x, y).RGBA()
+	for y := 0; y < bounds.Max.Y; y++ {
+		for x := 0; x < bounds.Max.X; x++ {
+			r, g, b, a := img.At(x, y).RGBA()
+			br, bg, bb, _ := bluredImage.At(x, y).RGBA()
 
-				newImage.Set(x, y, color.RGBA64{
-					stretch(r, br),
-					stretch(g, bg),
-					stretch(b, bb),
-					uint16(a),
-				})
-			}
+			newImage.Set(x, y, color.RGBA64{
+				stretch(r, br),
+				stretch(g, bg),
+				stretch(b, bb),
+				uint16(a),
+			})
 		}
-	}()
-	go func() {
-		defer wg.Done()
-		for y := bounds.Max.Y / 2; y < bounds.Max.Y; y++ {
-			for x := 0; x < bounds.Max.X; x++ {
-				//normal Image
-				r, g, b, a := img.At(x, y).RGBA()
-				// blured Image
-				br, bg, bb, _ := bluredImage.At(x, y).RGBA()
+	}
 
-				newImage.Set(x, y, color.RGBA64{
-					stretch(r, br),
-					stretch(g, bg),
-					stretch(b, bb),
-					uint16(a),
-				})
-			}
-		}
-	}()
-	wg.Wait()
 	return newImage
 }
