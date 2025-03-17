@@ -17,6 +17,7 @@ import (
 //   - sierra
 //   - two-row-seirra
 //   - sierra-lite
+//   - none
 //
 // Parameters:
 //   - img: The input image
@@ -100,7 +101,7 @@ func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.
 				makeDither(image, x+1, y+1, errR, errG, errB, errA, 1.0/8)
 				makeDither(image, x, y+2, errR, errG, errB, errA, 1.0/8)
 
-			case "Sierra":
+			case "sierra":
 				makeDither(image, x+1, y, errR, errG, errB, errA, 5.0/32)
 				makeDither(image, x+2, y, errR, errG, errB, errA, 3.0/32)
 				makeDither(image, x+2, y+1, errR, errG, errB, errA, 2.0/32)
@@ -121,6 +122,11 @@ func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.
 				makeDither(image, x+2, y+1, errR, errG, errB, errA, 1.0/16)
 
 			case "sierra-lite":
+				makeDither(image, x+1, y, errR, errG, errB, errA, 2.0/4)
+				makeDither(image, x-1, y+1, errR, errG, errB, errA, 1.0/4)
+				makeDither(image, x, y+1, errR, errG, errB, errA, 1.0/4)
+
+			case "none":
 				makeDither(image, x+1, y, errR, errG, errB, errA, 2.0/4)
 				makeDither(image, x-1, y+1, errR, errG, errB, errA, 1.0/4)
 				makeDither(image, x, y+1, errR, errG, errB, errA, 1.0/4)
