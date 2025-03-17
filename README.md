@@ -1,4 +1,4 @@
-![NearestNeighbor](https://github.com/user-attachments/assets/9a9c0c22-6e09-4d5f-9fd7-b05b7173f9e8)![UnsharpMasking](https://github.com/user-attachments/assets/6756cd0f-2e46-4f06-8207-e69edb0bdc50)# image-effects
+# image-effects
 A collection of image effects algorithms written in Go.
 
 ## Installation
