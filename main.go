@@ -1,4 +1,3 @@
 package imgeffects
 
-// This is kept for backward compatibility
-const Version = "0.1.0"
+const Version = "0.4.0"
