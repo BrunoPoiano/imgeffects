@@ -130,5 +130,4 @@ func GaussianBlur(img image.Image, size int) image.Image {
 	horizontalBlur := applyHorizontalBlur(img, kernel)
 	newImage := applyVerticalBlur(horizontalBlur, kernel)
 	return newImage
-
 }
