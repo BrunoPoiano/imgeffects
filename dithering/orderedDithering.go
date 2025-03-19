@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"math"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // OrderedDithering applies an ordered dithering effect to an image.
@@ -18,8 +20,12 @@ import (
 func OrderedDithering(img image.Image, level, size int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
-
+	level = utils.ClampGeneric(level, 1, 20)
 	threshold := thresholdMatrix(size)
+
+	if size%2 != 0 {
+		size++
+	}
 
 	for y := 0; y < bounds.Max.Y; y++ {
 		for x := 0; x < bounds.Max.X; x++ {

@@ -29,6 +29,9 @@ import (
 // Returns:
 //   - image.Image
 func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.Image {
+
+	level = utils.ClampGeneric(level, 1, 10)
+
 	quantize := func(value uint8, levels int) (uint8, int) {
 		scale := 255.0 / float64(levels-1)
 		newValue := uint8(math.Round(float64(value)*float64(levels-1)/255.0) * scale)

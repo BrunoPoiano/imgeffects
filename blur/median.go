@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"sort"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // Median apply a median filter to a image.
@@ -18,9 +20,7 @@ func Median(img image.Image, box int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewNRGBA64(bounds)
 
-	if box < 3 {
-		box = 3
-	}
+	box = utils.ClampGeneric(box, 3, 100)
 
 	edgex := box / 2
 	edgey := box / 2

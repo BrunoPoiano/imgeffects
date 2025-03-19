@@ -21,6 +21,10 @@ import (
 func LaplacianOfGaussian(img image.Image, blur_level int, scaling float64) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewGray(bounds)
+
+	blur_level = utils.ClampGeneric(blur_level, 0, 20)
+	scaling = float64(utils.ClampGeneric(int(scaling), 5, 20))
+
 	bluredImage := blur.GaussianBlur(img, blur_level)
 
 	kernel := [][]int{

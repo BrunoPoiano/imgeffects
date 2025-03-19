@@ -21,8 +21,8 @@ func DifferenceOfGaussians(img image.Image, img_one_blur, img_two_blur int) imag
 	bounds := img.Bounds()
 	newImage := image.NewGray(bounds)
 
-	img_blured_one := blur.GaussianBlur(img, img_one_blur)
-	img_blured_two := blur.GaussianBlur(img, img_two_blur)
+	img_blured_one := blur.GaussianBlur(img, utils.ClampGeneric(img_one_blur, 0, 20))
+	img_blured_two := blur.GaussianBlur(img, utils.ClampGeneric(img_two_blur, 0, 20))
 
 	for y := 0; y < bounds.Max.Y; y++ {
 		for x := 0; x < bounds.Max.X; x++ {

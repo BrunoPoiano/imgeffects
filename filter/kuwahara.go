@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"math"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 func RGBToHSV(c color.Color) float64 {
@@ -70,10 +72,10 @@ func averageRGB(img image.Image, x1, y1, x2, y2 int) color.Color {
 // Returns:
 //   - image.Image
 func KuwaharaFilter(img image.Image, size int) image.Image {
-
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
 	result := image.NewRGBA(bounds)
+	size = utils.ClampGeneric(size, 1, 30)
 
 	halfWin := size / 2
 	quadSize := int(math.Ceil(float64(size) / 2.0))

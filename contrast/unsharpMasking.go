@@ -12,13 +12,13 @@ import (
 //
 // Parameters:
 //   - img: The input image
-//   - variation: [0,1]
-//   - blurLevel: [1,10]
+//   - variation: [0,1]: controls sharpening strength, where 0 is no effect and 1 is maximum
+//   - blurLevel: [1,10]: controls the amount of blur applied before applying the mask
 //
 // Returns:
 //   - image.Image
 func UnsharpMasking(img image.Image, variation float64, blurLevel int) image.Image {
-
+	blurLevel = utils.ClampGeneric(blurLevel, 1, 20)
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
 	bluredImage := blur.GaussianBlur(img, blurLevel)

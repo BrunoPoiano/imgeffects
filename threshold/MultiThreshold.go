@@ -16,6 +16,7 @@ import (
 // Returns:
 //   - image.Image
 func MultiThreshold(img image.Image, quantity int) image.Image {
+	quantity = utils.ClampGeneric(quantity, 2, 100)
 
 	bounds := img.Bounds()
 	newImage := image.NewGray(bounds)

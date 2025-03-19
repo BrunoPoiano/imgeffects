@@ -59,3 +59,14 @@ func Clamp16bit(val int32) uint16 {
 		return uint16(val)
 	}
 }
+
+func ClampGeneric(value, min, max int) int {
+	switch {
+	case value < min:
+		return min
+	case value > max:
+		return max
+	default:
+		return value
+	}
+}

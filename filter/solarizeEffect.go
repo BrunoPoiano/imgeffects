@@ -7,7 +7,16 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
+// SolarizeEffect is the effect of tone reversal observed in cases of extreme overexposure of the photographic film in the camera.
+//
+// Parameters:
+//   - img: The input image
+//   - level: Filter size from 1 to 100
+//
+// Returns:
+//   - image.Image
 func SolarizeEffect(img image.Image, level int) image.Image {
+	level = utils.ClampGeneric(level, 1, 100)
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
 

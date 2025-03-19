@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"math"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 func createKernel(size int) []float64 {
@@ -125,7 +127,7 @@ func applyVerticalBlur(img image.Image, kernel []float64) *image.RGBA64 {
 // Returns:
 //   - image.Image
 func GaussianBlur(img image.Image, level int) image.Image {
-
+	level = utils.ClampGeneric(level, 0, 30)
 	kernel := createKernel(level)
 	horizontalBlur := applyHorizontalBlur(img, kernel)
 	newImage := applyVerticalBlur(horizontalBlur, kernel)

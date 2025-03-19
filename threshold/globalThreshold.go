@@ -18,7 +18,7 @@ import (
 func GlobalThreshold(img image.Image, level int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewGray(bounds)
-
+	level = utils.ClampGeneric(level, 1, 100)
 	treshold_level := (255 * level) / 100
 
 	for y := 1; y < bounds.Max.Y-1; y++ {

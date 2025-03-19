@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"math"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // GammaCorrection applies gamma correction to an image.
@@ -16,6 +18,7 @@ import (
 //   - image.Image
 func GammaCorrection(img image.Image, gamma float64) image.Image {
 
+	gamma = float64(utils.ClampGeneric(int(gamma), 1, 20))
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
 

@@ -3,6 +3,8 @@ package rgb
 import (
 	"image"
 	"image/color"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // adjustLevels manually adjust the red, green, and blue levels of an image.
@@ -16,6 +18,11 @@ import (
 // Returns:
 //   - image.Image
 func adjustLevels(img image.Image, red, green, blue int) image.Image {
+
+	red = utils.ClampGeneric(red, 1, 100)
+	green = utils.ClampGeneric(green, 1, 100)
+	blue = utils.ClampGeneric(blue, 1, 100)
+
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
 

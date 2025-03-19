@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"math"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // HSLToRGB converts HSL values to RGB.
@@ -91,7 +93,7 @@ func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 // Returns:
 //   - image.Image
 func Hue(img image.Image, change int) image.Image {
-
+	change = utils.ClampGeneric(change, 0, 360)
 	bounds := img.Bounds()
 	newImage := image.NewNRGBA64(bounds)
 
@@ -119,7 +121,6 @@ func Hue(img image.Image, change int) image.Image {
 // Returns:
 //   - image.Image
 func Saturation(img image.Image, change float64) image.Image {
-
 	bounds := img.Bounds()
 	newImage := image.NewNRGBA64(bounds)
 	change = math.Max(-1, math.Min(1, change))

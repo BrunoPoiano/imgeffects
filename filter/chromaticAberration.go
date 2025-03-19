@@ -3,6 +3,8 @@ package filter
 import (
 	"image"
 	"image/color"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // Chromatic Aberration Mimics the lens distortion where red, green, and blue channels misalign.
@@ -17,6 +19,9 @@ import (
 func ChromaticAberration(img image.Image, x_offset, y_offset int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewNRGBA64(bounds)
+
+	x_offset = utils.ClampGeneric(x_offset, 1, 20)
+	y_offset = utils.ClampGeneric(y_offset, 1, 20)
 
 	blue_y_offset := y_offset * -1
 	blue_x_offset := x_offset * -1

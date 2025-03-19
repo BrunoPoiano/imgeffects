@@ -5,6 +5,8 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 type Point struct {
@@ -41,6 +43,7 @@ func calcPoints(img image.Image, seed int) []Point {
 // Returns:
 //   - image.Image
 func VoronoiPixelation(img image.Image, seed int) image.Image {
+	seed = utils.ClampGeneric(seed, 1, 100000)
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
 	seeds := calcPoints(img, seed)
