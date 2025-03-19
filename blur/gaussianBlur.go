@@ -120,13 +120,13 @@ func applyVerticalBlur(img image.Image, kernel []float64) *image.RGBA64 {
 //
 // Parameters:
 //   - image
-//   - size 0 to 20
+//   - level: 0 to 20
 //
 // Returns:
 //   - image.Image
-func GaussianBlur(img image.Image, size int) image.Image {
+func GaussianBlur(img image.Image, level int) image.Image {
 
-	kernel := createKernel(size)
+	kernel := createKernel(level)
 	horizontalBlur := applyHorizontalBlur(img, kernel)
 	newImage := applyVerticalBlur(horizontalBlur, kernel)
 	return newImage

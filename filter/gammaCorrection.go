@@ -1,4 +1,4 @@
-package gamma
+package filter
 
 import (
 	"image"

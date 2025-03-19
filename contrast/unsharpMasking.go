@@ -5,6 +5,7 @@ import (
 	"image/color"
 
 	"github.com/BrunoPoiano/imgeffects/blur"
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // UnsharpMasking applies the Unsharp Masking algorithm filter to an image.
@@ -24,20 +25,9 @@ func UnsharpMasking(img image.Image, variation float64, blurLevel int) image.Ima
 
 	stretch := func(value, bluredValue uint32) uint16 {
 
-		clamp := func(val int32) uint16 {
-			switch {
-			case val < 0:
-				return 0
-			case val > 65535:
-				return 65535
-			default:
-				return uint16(val)
-			}
-		}
-
 		diff := int32(value) - int32(bluredValue)
 		result := int32(value) + int32(float64(diff)*variation)
-		return clamp(result)
+		return utils.Clamp16bit(result)
 	}
 
 	for y := 0; y < bounds.Max.Y; y++ {

@@ -1,14 +1,10 @@
-package kuwahara
+package filter
 
 import (
 	"image"
 	"image/color"
 	"math"
 )
-
-func clamp(value, minVal, maxVal int) int {
-	return int(math.Max(float64(minVal), math.Min(float64(value), float64(maxVal))))
-}
 
 func RGBToHSV(c color.Color) float64 {
 	r, g, b, _ := c.RGBA()
@@ -81,6 +77,10 @@ func KuwaharaFilter(img image.Image, size int) image.Image {
 
 	halfWin := size / 2
 	quadSize := int(math.Ceil(float64(size) / 2.0))
+
+	clamp := func(value, minVal, maxVal int) int {
+		return int(math.Max(float64(minVal), math.Min(float64(value), float64(maxVal))))
+	}
 
 	for y := bounds.Min.Y; y < height; y++ {
 		for x := bounds.Min.X; x < width; x++ {

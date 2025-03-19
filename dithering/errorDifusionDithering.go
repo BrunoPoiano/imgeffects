@@ -4,6 +4,8 @@ import (
 	"image"
 	"image/color"
 	"math"
+
+	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
 // ErrorDiffusionDithering applies an error diffusion dithering effect to an image.
@@ -135,24 +137,15 @@ func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.
 }
 
 func makeDither(img *image.RGBA, x, y int, r, g, b, a int, factor float64) {
-	clamp := func(value int) uint8 {
-		if value < 0 {
-			return 0
-		} else if value > 255 {
-			return 255
-		}
-		return uint8(value)
-	}
-
 	bounds := img.Bounds()
 	if x >= bounds.Min.X && x < bounds.Max.X && y >= bounds.Min.Y && y < bounds.Max.Y {
 		pixel := img.RGBAAt(x, y)
 
 		newPixel := color.RGBA{
-			R: clamp(int(pixel.R) + int(float64(r)*factor)),
-			G: clamp(int(pixel.G) + int(float64(g)*factor)),
-			B: clamp(int(pixel.B) + int(float64(b)*factor)),
-			A: clamp(int(pixel.A) + int(float64(a)*factor)),
+			R: utils.Clamp8bit(int(pixel.R) + int(float64(r)*factor)),
+			G: utils.Clamp8bit(int(pixel.G) + int(float64(g)*factor)),
+			B: utils.Clamp8bit(int(pixel.B) + int(float64(b)*factor)),
+			A: utils.Clamp8bit(int(pixel.A) + int(float64(a)*factor)),
 		}
 		img.SetRGBA(x, y, newPixel)
 	}
