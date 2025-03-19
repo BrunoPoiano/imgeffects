@@ -32,6 +32,11 @@ type AsciiImage struct {
 //		Color      string
 //	}
 func GenerateAscii(img image.Image, asciiChars string, lineHeight, fontSize int, useColor bool) [][]AsciiImage {
+
+	if len(asciiChars) == 0 || asciiChars == "" {
+		return nil
+	}
+
 	density := []rune(asciiChars)
 
 	newFontSize, newLineHeight := resizeAscii(lineHeight, fontSize)

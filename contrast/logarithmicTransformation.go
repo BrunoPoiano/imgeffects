@@ -22,7 +22,7 @@ func LogarithmicTransformation(img image.Image, variation float64) image.Image {
 	calc := func(value uint32) uint16 {
 		switch variation {
 		case 0:
-			variation = 0.01
+			variation = 0.1
 		case -1:
 			variation = -0.99
 		}

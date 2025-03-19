@@ -34,7 +34,8 @@ func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.
 
 	quantize := func(value uint8, levels int) (uint8, int) {
 		scale := 255.0 / float64(levels-1)
-		newValue := uint8(math.Round(float64(value)*float64(levels-1)/255.0) * scale)
+		newValue := utils.Clamp8bit(int(math.Round(float64(value)*float64(levels-1)/255.0) * scale))
+
 		return newValue, int(value) - int(newValue)
 	}
 
