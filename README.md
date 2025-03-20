@@ -1,5 +1,5 @@
 # image-effects
-A collection of image effects algorithms written in Go.
+A collection of image effects algorithms written in Go with parallel processing support.
 
 ## Installation
 

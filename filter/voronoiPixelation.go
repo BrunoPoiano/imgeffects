@@ -5,6 +5,7 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
+	"sync"
 
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
@@ -43,29 +44,30 @@ func calcPoints(img image.Image, seed int) []Point {
 // Returns:
 //   - image.Image
 func VoronoiPixelation(img image.Image, seed int) image.Image {
-	seed = utils.ClampGeneric(seed, 1, 100000)
 	bounds := img.Bounds()
-	newImage := image.NewRGBA64(bounds)
 	seeds := calcPoints(img, seed)
+	seed = utils.ClampGeneric(seed, 1, 100000)
 
-	for y := 0; y < bounds.Max.Y; y++ {
-		for x := 0; x < bounds.Max.X; x++ {
+	voronoiPixelationFunction := func(start, end int, newImage *image.RGBA64, wg *sync.WaitGroup) {
+		defer wg.Done()
+		for y := start; y < end; y++ {
+			for x := 0; x < bounds.Max.X; x++ {
 
-			minDistance := math.MaxFloat64
-			var nearestColor color.Color
+				minDistance := math.MaxFloat64
+				var nearestColor color.Color
 
-			for _, seed := range seeds {
-				distance := distance(Point{X: x, Y: y}, seed)
-				if distance < minDistance {
-					minDistance = distance
-					nearestColor = seed.Color
+				for _, seed := range seeds {
+					distance := distance(Point{X: x, Y: y}, seed)
+					if distance < minDistance {
+						minDistance = distance
+						nearestColor = seed.Color
+					}
 				}
-			}
 
-			newImage.Set(x, y, nearestColor)
+				newImage.Set(x, y, nearestColor)
+			}
 		}
 	}
 
-	return newImage
-
+	return utils.ParallelExecution(utils.ParallelExecutionStruct{Image: img, Function: voronoiPixelationFunction})
 }

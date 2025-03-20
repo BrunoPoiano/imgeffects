@@ -1,5 +1,49 @@
 package utils
 
+import (
+	"image"
+	"runtime"
+	"sync"
+)
+
+type ParallelExecutionStruct struct {
+	Image    image.Image
+	Function func(int, int, *image.RGBA64, *sync.WaitGroup)
+}
+
+func ParallelExecution(exec ParallelExecutionStruct) image.Image {
+	var wg sync.WaitGroup
+
+	bounds := exec.Image.Bounds()
+	newImage := image.NewRGBA64(bounds)
+	cpus_available := runtime.NumCPU()
+
+	if cpus_available < 4 {
+		wg.Add(1)
+		go exec.Function(0, bounds.Max.Y, newImage, &wg)
+
+	} else {
+		cpus_available--
+		println("using", cpus_available, "cpus")
+
+		wg.Add(cpus_available)
+		div := (bounds.Max.Y + cpus_available - 1) / cpus_available
+		start := 0
+
+		for i := 0; i < cpus_available; i++ {
+			end := start + div
+			if end > bounds.Max.Y {
+				end = bounds.Max.Y
+			}
+			go exec.Function(start, end, newImage, &wg)
+			start = end
+		}
+	}
+
+	wg.Wait()
+	return newImage
+}
+
 // Luminance8bit calculates the luminance of an image (0-255) using the formula:
 // L = 0.299*R + 0.587*G + 0.114*B
 //

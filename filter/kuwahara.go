@@ -4,6 +4,7 @@ import (
 	"image"
 	"image/color"
 	"math"
+	"sync"
 
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
@@ -74,7 +75,6 @@ func averageRGB(img image.Image, x1, y1, x2, y2 int) color.Color {
 func KuwaharaFilter(img image.Image, size int) image.Image {
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
-	result := image.NewRGBA(bounds)
 	size = utils.ClampGeneric(size, 1, 30)
 
 	halfWin := size / 2
@@ -84,54 +84,57 @@ func KuwaharaFilter(img image.Image, size int) image.Image {
 		return int(math.Max(float64(minVal), math.Min(float64(value), float64(maxVal))))
 	}
 
-	for y := bounds.Min.Y; y < height; y++ {
-		for x := bounds.Min.X; x < width; x++ {
-			//quadrants
-			tlX, tlY := x-halfWin, y-halfWin
-			q1X, q1Y := tlX+quadSize, tlY+quadSize
-			q2X, q2Y := tlX+size, tlY+quadSize
-			q3X, q3Y := tlX+quadSize, tlY+size
-			q4X, q4Y := tlX+size, tlY+size
+	kuwaFunc := func(start, end int, newImage *image.RGBA64, wg *sync.WaitGroup) {
+		defer wg.Done()
+		for y := start; y < end; y++ {
+			for x := bounds.Min.X; x < width; x++ {
+				//quadrants
+				tlX, tlY := x-halfWin, y-halfWin
+				q1X, q1Y := tlX+quadSize, tlY+quadSize
+				q2X, q2Y := tlX+size, tlY+quadSize
+				q3X, q3Y := tlX+quadSize, tlY+size
+				q4X, q4Y := tlX+size, tlY+size
 
-			//clamp values
-			q1X, q1Y = clamp(q1X, 0, width), clamp(q1Y, 0, height)
-			q2X, q2Y = clamp(q2X, 0, width), clamp(q2Y, 0, height)
-			q3X, q3Y = clamp(q3X, 0, width), clamp(q3Y, 0, height)
-			q4X, q4Y = clamp(q4X, 0, width), clamp(q4Y, 0, height)
+				//clamp values
+				q1X, q1Y = clamp(q1X, 0, width), clamp(q1Y, 0, height)
+				q2X, q2Y = clamp(q2X, 0, width), clamp(q2Y, 0, height)
+				q3X, q3Y = clamp(q3X, 0, width), clamp(q3Y, 0, height)
+				q4X, q4Y = clamp(q4X, 0, width), clamp(q4Y, 0, height)
 
-			//extracting brightness
-			quadrands := []struct {
-				x1, y1, x2, y2 int
-			}{
-				{tlX, tlY, q1X, q1Y},
-				{q1X, tlY, q2X, q2Y},
-				{tlX, q1Y, q3X, q3Y},
-				{q1X, q1Y, q4X, q4Y},
-			}
+				//extracting brightness
+				quadrands := []struct {
+					x1, y1, x2, y2 int
+				}{
+					{tlX, tlY, q1X, q1Y},
+					{q1X, tlY, q2X, q2Y},
+					{tlX, q1Y, q3X, q3Y},
+					{q1X, q1Y, q4X, q4Y},
+				}
 
-			//calc standard deviation
-			minStdDev := math.MaxFloat64
-			bestQuad := quadrands[0]
+				//calc standard deviation
+				minStdDev := math.MaxFloat64
+				bestQuad := quadrands[0]
 
-			for _, quad := range quadrands {
-				var values []float64
-				for yy := quad.y1; yy < quad.y2; yy++ {
-					for xx := quad.x1; xx < quad.x2; xx++ {
-						values = append(values, RGBToHSV(img.At(xx, yy)))
+				for _, quad := range quadrands {
+					var values []float64
+					for yy := quad.y1; yy < quad.y2; yy++ {
+						for xx := quad.x1; xx < quad.x2; xx++ {
+							values = append(values, RGBToHSV(img.At(xx, yy)))
+						}
+					}
+
+					stdDevVal := stdDev(values)
+					if stdDevVal < minStdDev {
+						minStdDev = stdDevVal
+						bestQuad = quad
 					}
 				}
 
-				stdDevVal := stdDev(values)
-				if stdDevVal < minStdDev {
-					minStdDev = stdDevVal
-					bestQuad = quad
-				}
+				// Assign the average color of the best quadrant
+				newImage.Set(x, y, averageRGB(img, bestQuad.x1, bestQuad.y1, bestQuad.x2, bestQuad.y2))
 			}
-
-			// Assign the average color of the best quadrant
-			result.Set(x, y, averageRGB(img, bestQuad.x1, bestQuad.y1, bestQuad.x2, bestQuad.y2))
 		}
-	}
 
-	return result
+	}
+	return utils.ParallelExecution(utils.ParallelExecutionStruct{Image: img, Function: kuwaFunc})
 }

@@ -90,6 +90,5 @@ func thresholdMatrix(size int) [][]float64 {
 		}
 	}
 
-	println(matrix)
 	return matrix
 }
