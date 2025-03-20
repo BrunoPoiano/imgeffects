@@ -111,26 +111,67 @@ go get github.com/BrunoPoiano/imgeffects
 
 
 ### RGB
-  - `rgb.adjustLevels`
+  - `rgb.adjustLevels(100, 0, 0)`
+  
+  ![AdjustLevels-red](https://github.com/user-attachments/assets/5d8e30ba-5e7e-459e-ae9c-1a6e2dff6d22)
+
+  - `rgb.adjustLevels(0, 100, 0)`
+  
+  ![AdjustLevels-green](https://github.com/user-attachments/assets/b6cf6c47-84aa-44b7-8ca9-b7f9a8d03f81)
+   
+  - `rgb.adjustLevels(0, 0, 100)`
+    
+  ![AdjustLevels-blue](https://github.com/user-attachments/assets/80ec4ceb-35d7-46a2-a78f-137c8f168198)
 
 ### Threshold
   - `threshold.MultiThreshold`
+  
+  ![MultiThreshold](https://github.com/user-attachments/assets/77c76e1b-7bee-4b56-aea2-58ab3b5e1eb0)
+    
   - `threshold.GlobalThreshold`
+  
+  ![GlobalThreshold](https://github.com/user-attachments/assets/dd77ebe1-6cec-41c5-a99f-238c0c6b26ec)   
 
 ### Edge Detection
   - `edgedetection.DifferenceOfGaussians`
+
+  ![DifferenceOfGaussians](https://github.com/user-attachments/assets/2d8b0df0-e694-4149-b24c-632b9e1358b9)
+
   - `edgedetection.LaplacianOfGaussian`
+  
+  ![LaplacianOfGaussian](https://github.com/user-attachments/assets/96817817-c26a-446b-abc0-baed7195962d)
+
+
   - `edgedetection.KernelOperatorBased`
     - sobel
+
+    ![KernelOperatorBased(srcImg, sobel)](https://github.com/user-attachments/assets/95ad76b6-8f38-4cc6-9fca-b579abae8476)
+      
     - prewitt
+
+    ![KernelOperatorBased(srcImg, prewitt)](https://github.com/user-attachments/assets/dbf44385-aa29-4941-b302-4155135532ac)
+      
     - robert-cross
+    
+    ![KernelOperatorBased(srcImg, robert-cross)](https://github.com/user-attachments/assets/92dafeda-c93c-4fd2-9767-b1f008148e60)
+      
     - scharr
+    
+    ![KernelOperatorBased(srcImg, scharr)](https://github.com/user-attachments/assets/f642f84d-7b1f-48da-86ac-085b5814495d)
 
 ### Filters
 
   - `filter.VoronoiPixelation`
+
+  ![VoronoiPixelation(](https://github.com/user-attachments/assets/08db4b9b-e853-4f58-839e-286119f97839)
+  
   - `filter.SolarizeEffect`
+
+  ![SolarizeEffect](https://github.com/user-attachments/assets/b03ae250-8d78-474f-ba0c-d7d3a49486d2)
+    
   - `filter.ChromaticAberration`
+
+  ![ChromaticAberration](https://github.com/user-attachments/assets/be0a3c01-50a5-40dd-afe7-90580afb68bd)
 
   - `filter.GammaCorrection`
 
