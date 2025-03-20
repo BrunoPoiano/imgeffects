@@ -17,7 +17,7 @@ import (
 //
 // Returns:
 //   - image.Image
-func adjustLevels(img image.Image, red, green, blue int) image.Image {
+func AdjustLevels(img image.Image, red, green, blue int) image.Image {
 
 	red = utils.ClampGeneric(red, 1, 100)
 	green = utils.ClampGeneric(green, 1, 100)
