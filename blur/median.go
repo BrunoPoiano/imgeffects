@@ -38,7 +38,7 @@ func sortColor(window []color.Color) color.Color {
 //
 // Parameters:
 //   - image
-//   - size: 3-30: the bigger the number it takes longer to process
+//   - box: 3-30: the bigger the number it takes longer to process
 //
 // Returns:
 //   - image.Image

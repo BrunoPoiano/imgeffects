@@ -2,6 +2,7 @@ package utils
 
 import (
 	"image"
+	"image/color"
 	"runtime"
 	"sync"
 )
@@ -9,31 +10,36 @@ import (
 type ParallelExecutionStruct struct {
 	Image    image.Image
 	Function func(int, int, *image.RGBA64, *sync.WaitGroup)
+	EndSize  int
 }
 
 func ParallelExecution(exec ParallelExecutionStruct) image.Image {
 	var wg sync.WaitGroup
-
 	bounds := exec.Image.Bounds()
 	newImage := image.NewRGBA64(bounds)
 	cpus_available := runtime.NumCPU()
+	endSize := bounds.Max.Y
+
+	if exec.EndSize > 0 {
+		endSize = exec.EndSize
+	}
 
 	if cpus_available < 4 {
 		wg.Add(1)
-		go exec.Function(0, bounds.Max.Y, newImage, &wg)
+		go exec.Function(0, endSize, newImage, &wg)
 
 	} else {
 		cpus_available--
 		println("using", cpus_available, "cpus")
 
 		wg.Add(cpus_available)
-		div := (bounds.Max.Y + cpus_available - 1) / cpus_available
+		div := (endSize + cpus_available - 1) / cpus_available
 		start := 0
 
 		for i := 0; i < cpus_available; i++ {
 			end := start + div
-			if end > bounds.Max.Y {
-				end = bounds.Max.Y
+			if end > endSize {
+				end = endSize
 			}
 			go exec.Function(start, end, newImage, &wg)
 			start = end
@@ -112,5 +118,33 @@ func ClampGeneric(value, min, max int) int {
 		return max
 	default:
 		return value
+	}
+}
+
+// ColorAverage calculates the average color of a slice of colors:
+//
+// Parameters:
+//   - colors: []color.Color
+//
+// Returns:
+//   - color.Color
+func ColorAverage(colors []color.Color) color.Color {
+
+	c_l := uint32(len(colors))
+	var r, g, b, a uint32
+
+	for _, c := range colors {
+		rr, gg, bb, aa := c.RGBA()
+		r += rr
+		g += gg
+		b += bb
+		a += aa
+	}
+
+	return color.NRGBA64{
+		R: uint16(r / c_l),
+		G: uint16(g / c_l),
+		B: uint16(b / c_l),
+		A: uint16(a / c_l),
 	}
 }
