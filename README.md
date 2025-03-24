@@ -161,12 +161,29 @@ go get github.com/BrunoPoiano/imgeffects
 
 ### Pointillism
   - `pointillism.PointillismGridBased`
+  
+  ![PointillismGridBased](https://github.com/user-attachments/assets/bec98442-c11d-49e9-80d7-0fe102015289)
+  
   - `pointillism.PointillismLuminanceBased`
+
+  ![PointillismLuminanceBased](https://github.com/user-attachments/assets/e959b2ee-75c2-41fe-9366-99ff32498437)
+    
   - `pointillism.PointillismLuminanceGridBased`
     - up
+      
+     ![PointillismLuminanceGridBased-up](https://github.com/user-attachments/assets/a71cc2be-4b03-4f56-b888-29d2cb1eb054)
+    
     - down
+      
+     ![PointillismLuminanceGridBased-down](https://github.com/user-attachments/assets/996e6e04-cb7d-4155-865b-66ecfc792de1)
+      
     - left
+      
+    ![PointillismLuminanceGridBased-left](https://github.com/user-attachments/assets/7c4b0cd4-c4fd-4e42-bc63-347d7cf26dc7)
+
     - right
+      
+    ![PointillismLuminanceGridBased-right](https://github.com/user-attachments/assets/4a31d61a-a90d-43d5-89fd-63980325450b)
 
 ### Filters
 
@@ -200,14 +217,30 @@ go get github.com/BrunoPoiano/imgeffects
 
 ## Noise
 
-- `noise.NoiseGenerator`
-- `noise.NoiseGeneratorColor`
-- `noise.NoiseGeneratorGrayScale`
+  - `noise.NoiseGenerator`
+  
+  ![noiseGenerator](https://github.com/user-attachments/assets/86402539-88ad-4182-a0b9-eee4a05101ba)
+  
+  - `noise.NoiseGeneratorColor`
 
-- `noise.BlendingNoiseToImage`
-  - gray
-  - color
-  - default
+  ![noiseGeneratorColor](https://github.com/user-attachments/assets/3a5d5903-f175-46f0-a759-2ceb6955bd57)
+  
+  - `noise.NoiseGeneratorGrayScale`
+
+  ![noiseGeneratorGrayScale](https://github.com/user-attachments/assets/08014298-b136-456a-9904-7090af556163)
+
+  - `noise.BlendingNoiseToImage`
+    - gray
+    
+    ![mergeTwoImages-gray](https://github.com/user-attachments/assets/1fb06417-04ee-4ebc-b2a9-03c30122491e)
+    
+    - color
+
+    ![mergeTwoImages-color](https://github.com/user-attachments/assets/5e54e4d8-7eab-43d6-81d3-ba12ce186aae)
+
+    - default
+    
+    ![mergeTwoImages-default](https://github.com/user-attachments/assets/a7afbf15-f227-44bb-b28b-ef694d456cd1)
 
 ## Resize
   - `resize.NearestNeighbor`
