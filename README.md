@@ -109,7 +109,6 @@ go get github.com/BrunoPoiano/imgeffects
 
   ![luminance](https://github.com/user-attachments/assets/f225c7eb-a8b9-4600-85b1-f2eb44b240be)
 
-
 ### RGB
   - `rgb.adjustLevels(100, 0, 0)`
 
@@ -128,9 +127,16 @@ go get github.com/BrunoPoiano/imgeffects
 
   ![MultiThreshold](https://github.com/user-attachments/assets/77c76e1b-7bee-4b56-aea2-58ab3b5e1eb0)
 
+  - `threshold.MultiThresholdColor`
+
   - `threshold.GlobalThreshold`
 
   ![GlobalThreshold](https://github.com/user-attachments/assets/dd77ebe1-6cec-41c5-a99f-238c0c6b26ec)
+
+  - `threshold.GlobalThresholdColor`
+
+  - `threshold.ThresholdRGB`
+  - `threshold.MultiThresholdRGB`
 
 ### Edge Detection
   - `edgedetection.DifferenceOfGaussians`
@@ -160,29 +166,32 @@ go get github.com/BrunoPoiano/imgeffects
     ![KernelOperatorBased(srcImg, scharr)](https://github.com/user-attachments/assets/f642f84d-7b1f-48da-86ac-085b5814495d)
 
 ### Pointillism
+  - `pointillism.halftone - color`
+  - `pointillism.halftone - black and white`
+
   - `pointillism.PointillismGridBased`
-  
+
   ![PointillismGridBased](https://github.com/user-attachments/assets/bec98442-c11d-49e9-80d7-0fe102015289)
-  
+
   - `pointillism.PointillismLuminanceBased`
 
   ![PointillismLuminanceBased](https://github.com/user-attachments/assets/e959b2ee-75c2-41fe-9366-99ff32498437)
-    
+
   - `pointillism.PointillismLuminanceGridBased`
     - up
-      
+
      ![PointillismLuminanceGridBased-up](https://github.com/user-attachments/assets/a71cc2be-4b03-4f56-b888-29d2cb1eb054)
-    
+
     - down
-      
+
      ![PointillismLuminanceGridBased-down](https://github.com/user-attachments/assets/996e6e04-cb7d-4155-865b-66ecfc792de1)
-      
+
     - left
-      
+
     ![PointillismLuminanceGridBased-left](https://github.com/user-attachments/assets/7c4b0cd4-c4fd-4e42-bc63-347d7cf26dc7)
 
     - right
-      
+
     ![PointillismLuminanceGridBased-right](https://github.com/user-attachments/assets/4a31d61a-a90d-43d5-89fd-63980325450b)
 
 ### Filters
@@ -215,31 +224,36 @@ go get github.com/BrunoPoiano/imgeffects
 
   ![GrayScale](https://github.com/user-attachments/assets/686ccce1-565d-468f-a4c7-910be01b119d)
 
+### Lines
+
+  - `LinesHorizontal`
+  - `LinesVertical`
+
 ## Noise
 
   - `noise.NoiseGenerator`
-  
+
   ![noiseGenerator](https://github.com/user-attachments/assets/86402539-88ad-4182-a0b9-eee4a05101ba)
-  
+
   - `noise.NoiseGeneratorColor`
 
   ![noiseGeneratorColor](https://github.com/user-attachments/assets/3a5d5903-f175-46f0-a759-2ceb6955bd57)
-  
+
   - `noise.NoiseGeneratorGrayScale`
 
   ![noiseGeneratorGrayScale](https://github.com/user-attachments/assets/08014298-b136-456a-9904-7090af556163)
 
   - `noise.BlendingNoiseToImage`
     - gray
-    
+
     ![mergeTwoImages-gray](https://github.com/user-attachments/assets/1fb06417-04ee-4ebc-b2a9-03c30122491e)
-    
+
     - color
 
     ![mergeTwoImages-color](https://github.com/user-attachments/assets/5e54e4d8-7eab-43d6-81d3-ba12ce186aae)
 
     - default
-    
+
     ![mergeTwoImages-default](https://github.com/user-attachments/assets/a7afbf15-f227-44bb-b28b-ef694d456cd1)
 
 ## Resize
