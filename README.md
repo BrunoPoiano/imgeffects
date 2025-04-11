@@ -129,14 +129,23 @@ go get github.com/BrunoPoiano/imgeffects
 
   - `threshold.MultiThresholdColor`
 
+  ![MultiThresholdColor](https://github.com/user-attachments/assets/d6342cc7-5ceb-42c6-93eb-07bbf7b79b77)
+
   - `threshold.GlobalThreshold`
 
   ![GlobalThreshold](https://github.com/user-attachments/assets/dd77ebe1-6cec-41c5-a99f-238c0c6b26ec)
 
   - `threshold.GlobalThresholdColor`
+  
+  ![GlobalThresholdColor](https://github.com/user-attachments/assets/627d12a5-4306-4940-becd-6e5748e8089d)
 
   - `threshold.ThresholdRGB`
+
+  ![ThresholdRGB](https://github.com/user-attachments/assets/d0445348-8e25-4710-9a93-0fed49c68753)
+
   - `threshold.MultiThresholdRGB`
+
+  ![MultiThresholdRGB](https://github.com/user-attachments/assets/347b8f97-1a7c-4f17-bb6a-7e895a75e334)
 
 ### Edge Detection
   - `edgedetection.DifferenceOfGaussians`
@@ -166,8 +175,13 @@ go get github.com/BrunoPoiano/imgeffects
     ![KernelOperatorBased(srcImg, scharr)](https://github.com/user-attachments/assets/f642f84d-7b1f-48da-86ac-085b5814495d)
 
 ### Pointillism
-  - `pointillism.halftone - color`
   - `pointillism.halftone - black and white`
+  
+  ![Halftone_black](https://github.com/user-attachments/assets/15f1fd19-4239-4b38-b715-841ba6173310)
+
+  - `pointillism.halftone - Color`
+
+  ![Halftone_color](https://github.com/user-attachments/assets/4cef79c3-3026-415b-87a1-a2779966c1bd)
 
   - `pointillism.PointillismGridBased`
 
@@ -226,8 +240,21 @@ go get github.com/BrunoPoiano/imgeffects
 
 ### Lines
 
+  - `LinesHorizontal - Color`
+  
+  ![linesHorizontalColor](https://github.com/user-attachments/assets/32eb7d6a-bddf-481b-a02d-0d37595373e1)
+
   - `LinesHorizontal`
+  
+  ![linesHorizontalblack](https://github.com/user-attachments/assets/51034756-f19d-493c-93bc-13e9a01eca17)
+    
+  - `LinesVertical Color`
+
+  ![linesVerticalcolor](https://github.com/user-attachments/assets/204c8e3f-7047-4429-a195-ac4151bccea8)
+
   - `LinesVertical`
+
+  ![linesVerticalblack](https://github.com/user-attachments/assets/10eac720-2ef8-4821-9c09-4f85ed94063b)
 
 ## Noise
 
