@@ -18,7 +18,7 @@ import (
 //
 // Returns:
 //   - image.Image
-func halftone(img image.Image, dotSize int, useColor bool) image.Image {
+func Halftone(img image.Image, dotSize int, useColor bool) image.Image {
 
 	dotSize = utils.ClampGeneric(dotSize, 1, 20)
 	bounds := img.Bounds()
@@ -67,5 +67,4 @@ func halftone(img image.Image, dotSize int, useColor bool) image.Image {
 		}
 	}
 	return newImage
-
 }
