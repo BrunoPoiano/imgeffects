@@ -5,13 +5,18 @@ import (
 	"image/color"
 )
 
-// LinearContrastStretchingGrayscale applies the Linear Contrast Stretching algorithm to an image.
+// LinearContrastStretchingGrayscale applies Linear Contrast Stretching to an image and converts it to grayscale.
+//
+// This function enhances the contrast of the image by stretching the intensity values to cover the full
+// range (0-255). It first finds the minimum and maximum intensity values in the image, then linearly
+// scales all pixel values between these extremes to fill the entire available range. The image is
+// converted to grayscale during this process by averaging the RGB channels.
 //
 // Parameters:
-//   - img: The input image
+//   - img: The input image to be enhanced and converted to grayscale
 //
 // Returns:
-//   - image.Image in grayscale
+//   - image.Image
 func LinearContrastStretchingGrayscale(img image.Image) image.Image {
 
 	bounds := img.Bounds()
@@ -47,13 +52,19 @@ func LinearContrastStretchingGrayscale(img image.Image) image.Image {
 	return newImage
 }
 
-// LinearContrastStretching applies the Linear Contrast Stretching algorithm to an image.
+// LinearContrastStretching applies Linear Contrast Stretching to enhance an image's contrast.
+//
+// This function improves the visual quality of an image by expanding its intensity range to
+// utilize the full dynamic range (0-255) for each color channel independently. It first identifies
+// the minimum and maximum values for each RGB channel across the entire image, then applies a linear
+// transformation to stretch these values across the full available range. The alpha channel remains
+// unchanged.
 //
 // Parameters:
-//   - img: The input image
+//   - img: The input image to be enhanced
 //
 // Returns:
-//   - image.Image
+//   - image.Image: A new image with enhanced contrast while preserving the original colors
 func LinearContrastStretching(img image.Image) image.Image {
 
 	bounds := img.Bounds()

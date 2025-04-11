@@ -8,13 +8,17 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// HSLToRGB converts HSL values to RGB.
+// HSLToRGB converts HSL (Hue, Saturation, Luminance) values to RGB color space.
+// Hue is specified in degrees (0-360), while saturation and luminance are in the range 0.0 to 1.0.
+// Returns 16-bit per channel RGB values as uint32 (range 0-65535).
 //
 // Parameters:
-//   - h, s, l float64
+//   - h: Hue angle in degrees (0-360)
+//   - s: Saturation value (0.0-1.0)
+//   - l: Luminance value (0.0-1.0)
 //
 // Returns:
-//   - r, g, b uint32
+//   - r, g, b: RGB color channels as uint32 values (0-65535)
 func HSLToRGB(h, s, l float64) (r, g, b uint32) {
 	var fr, fg, fb float64
 
@@ -44,13 +48,16 @@ func HSLToRGB(h, s, l float64) (r, g, b uint32) {
 	return r, g, b
 }
 
-// RGBToHSL converts RGB values to HSL.
+// RGBToHSL converts RGB color values to HSL (Hue, Saturation, Luminance) color space.
+// Takes 16-bit per channel RGB values and returns HSL components.
 //
 // Parameters:
-//   - r, g, b uint32
+//   - r, g, b: RGB color channels as uint32 values (0-65535)
 //
 // Returns:
-//   - h, s, l float64
+//   - h: Hue angle in degrees (0-360)
+//   - s: Saturation value (0.0-1.0)
+//   - l: Luminance value (0.0-1.0)
 func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 	fr := float64(r) / 65535.0
 	fg := float64(g) / 65535.0
@@ -84,11 +91,12 @@ func RGBToHSL(r, g, b uint32) (h, s, l float64) {
 	return h, s, l
 }
 
-// AdjustHue changes the hue of an image.
+// Hue adjusts the hue component of an image while preserving saturation and luminance.
+// This function shifts the hue angle of each pixel by the specified amount.
 //
 // Parameters:
-//   - img: The input image
-//   - change: Hue shift in degrees (0-360)
+//   - img: The input image to be processed
+//   - change: Hue shift in degrees (0-360), will be clamped to valid range
 //
 // Returns:
 //   - image.Image
@@ -112,7 +120,8 @@ func Hue(img image.Image, change int) image.Image {
 
 }
 
-// AdjustSaturation changes the saturation of an image.
+// Saturation adjusts the color saturation of an image while preserving hue and luminance.
+// Positive values increase saturation while negative values decrease it.
 //
 // Parameters:
 //   - img: The input image
@@ -140,11 +149,12 @@ func Saturation(img image.Image, change float64) image.Image {
 
 }
 
-// AdjustLuminance changes the luminance of an image.
+// Luminance adjusts the brightness or luminance of an image while preserving hue and saturation.
+// Positive values brighten the image, while negative values darken it.
 //
 // Parameters:
-//   - img: The input image
-//   - change: Luminance adjustment (-1.0 to 1.0)
+//   - img: The input image to be processed
+//   - change: Luminance adjustment factor (-1.0 to 1.0)
 //
 // Returns:
 //   - image.Image

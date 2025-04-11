@@ -7,15 +7,19 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// Chromatic Aberration Mimics the lens distortion where red, green, and blue channels misalign.
+// ChromaticAberration simulates the optical effect where different color channels
+// appear misaligned, similar to lens distortion in photography.
+//
+// This function shifts the red channel in one direction and the blue channel in the opposite
+// direction, while keeping the green channel unchanged, creating a color fringing effect.
 //
 // Parameters:
-//   - img: The input image
-//   - x_offset: offset for the x axis: 1-10
-//   - y_offset: offset for the y axis: 1-10
+//   - img: The source image to apply the effect to
+//   - x_offset: Horizontal offset for color channel shifting (range: 1-20, will be clamped)
+//   - y_offset: Vertical offset for color channel shifting (range: 1-20, will be clamped)
 //
 // Returns:
-//   - image.Image
+//   - A new image.Image
 func ChromaticAberration(img image.Image, x_offset, y_offset int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewNRGBA64(bounds)

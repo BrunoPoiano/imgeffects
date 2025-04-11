@@ -119,14 +119,20 @@ func applyVerticalBlur(img image.Image, kernel []float64) image.Image {
 	return utils.ParallelExecution(utils.ParallelExecutionStruct{Image: img, Function: verticalFunc})
 }
 
-// GaussianBlur apply a Gaussian blur filter to a image.
+// GaussianBlur applies a Gaussian blur filter to an image, creating a smooth blurring effect.
+// The algorithm uses separable 1D convolutions for horizontal and vertical passes, which is
+// significantly more efficient than a direct 2D convolution. Processing is done in parallel
+// to maximize performance on multi-core systems.
 //
 // Parameters:
-//   - image
-//   - level: 0 to 30
+//   - img: The source image to be blurred (image.Image interface)
+//   - level: The blur intensity, ranging from 0 (no blur) to 30 (maximum blur)
+//     Higher values create a stronger blur effect but may impact performance
 //
 // Returns:
-//   - image.Image
+//   - image.Image: A new image with the blur effect applied
+//
+// Note: The level parameter is automatically clamped to the valid range [0, 30].
 func GaussianBlur(img image.Image, level int) image.Image {
 	level = utils.ClampGeneric(level, 0, 30)
 	kernel := createKernel(level)

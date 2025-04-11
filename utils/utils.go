@@ -7,12 +7,27 @@ import (
 	"sync"
 )
 
+// ParallelExecutionStruct contains parameters for parallel image processing.
+//
+// Fields:
+//   - Image: The source image to be processed
+//   - Function: The function to apply to image regions (params: start y, end y, output image, waitgroup)
+//   - EndSize: Optional limit for the y-coordinate (defaults to image height if <= 0)
 type ParallelExecutionStruct struct {
 	Image    image.Image
 	Function func(int, int, *image.RGBA64, *sync.WaitGroup)
 	EndSize  int
 }
 
+// ParallelExecution processes an image in parallel using multiple CPU cores.
+// It distributes the workload by dividing the image into horizontal strips
+// and processing each strip concurrently with the provided function.
+//
+// Parameters:
+//   - exec: ParallelExecutionStruct containing the image, processing function, and optional size limit
+//
+// Returns:
+//   - image.Image: The resulting processed RGBA64 image
 func ParallelExecution(exec ParallelExecutionStruct) image.Image {
 	var wg sync.WaitGroup
 	bounds := exec.Image.Bounds()
@@ -110,6 +125,34 @@ func Clamp16bit(val int32) uint16 {
 	}
 }
 
+// ClampFloat64 clamps a float64 value between a minimum and maximum value.
+//
+// Parameters:
+//   - value: float64 representing the value to be clamped
+//   - min: float64 representing the minimum value
+//   - max: float64 representing the maximum value
+//
+// Returns:
+//   - float64 representing the clamped value
+func ClampFloat64(value, min, max float64) float64 {
+	if value < min {
+		return min
+	}
+	if value > max {
+		return max
+	}
+	return value
+}
+
+// ClampGeneric constrains an integer value between a minimum and maximum value.
+//
+// Parameters:
+//   - value: int representing the value to be clamped
+//   - min: int representing the minimum allowed value
+//   - max: int representing the maximum allowed value
+//
+// Returns:
+//   - int representing the clamped value
 func ClampGeneric(value, min, max int) int {
 	switch {
 	case value < min:

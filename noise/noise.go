@@ -8,11 +8,12 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// NoiseGeneratorColor generates a color noise image.
+// NoiseGeneratorColor generates a random color noise image where each pixel has random RGB values.
+// The generated image uses the RGBA64 color model with full opacity (alpha = 65535).
 //
 // Parameters:
-//   - width: The width of the image
-//   - height: The height of the image
+//   - width: The width of the image in pixels
+//   - height: The height of the image in pixels
 //
 // Returns:
 //   - image.Image
@@ -37,11 +38,13 @@ func NoiseGeneratorColor(width, height int) image.Image {
 	return newImage
 }
 
-// NoiseGenerator generates a black and white noise image.
+// NoiseGenerator generates a black and white (binary) noise image.
+// Each pixel is determined by comparing the luminance of random RGB values
+// against a 50% threshold, resulting in either black (0) or white (255) pixels.
 //
 // Parameters:
-//   - width: The width of the image
-//   - height: The height of the image
+//   - width: The width of the image in pixels
+//   - height: The height of the image in pixels
 //
 // Returns:
 //   - image.Image
@@ -70,11 +73,13 @@ func NoiseGenerator(width, height int) image.Image {
 	return newImage
 }
 
-// NoiseGeneratorGrayScale generates a gray scale noise image.
+// NoiseGeneratorGrayScale generates a grayscale noise image with continuous tones.
+// Each pixel's value is determined by calculating the luminance of random RGB values,
+// creating a full range of gray shades from black to white.
 //
 // Parameters:
-//   - width: The width of the image
-//   - height: The height of the image
+//   - width: The width of the image in pixels
+//   - height: The height of the image in pixels
 //
 // Returns:
 //   - image.Image

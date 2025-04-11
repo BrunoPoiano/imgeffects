@@ -6,11 +6,17 @@ import (
 	"math"
 )
 
-// LogarithmicTransformation applies logarithmic transformation to an image.
+// LogarithmicTransformation applies logarithmic transformation to an image,
+// which can enhance details in darker regions while compressing higher intensity values.
+//
+// The transformation follows the formula: output = log(1 + variation*pixel) / log(1 + variation)
+// where pixel values are normalized to the range [0,1].
 //
 // Parameters:
-//   - img: The input image
-//   - variation: [-1,1]
+//   - img: The input image to be transformed
+//   - variation: Controls the strength and direction of the transformation
+//     Range: [-1,1]. Positive values enhance dark regions, negative values enhance
+//     bright regions. Values 0 and -1 are automatically adjusted to 0.1 and -0.99 respectively to avoid mathematical issues.
 //
 // Returns:
 //   - image.Image

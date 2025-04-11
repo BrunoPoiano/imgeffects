@@ -8,12 +8,20 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// PointillismLuminanceGridBased transforms an image to a grid of points based on luminance.
+// PointillismLuminanceGridBased transforms an image into a pointillism-style artwork
+// using a grid-based approach where points are sized according to luminance values.
+// The algorithm creates a visual effect similar to pointillist paintings, where
+// discrete dots of color are applied to form a pattern that creates the overall image.
 //
 // Parameters:
-//   - img: The input image
-//   - scalling: max size of the brush: 1-100: the larger the value it takes longer to compute
-//   - direction: direction of the brush: [up, down, left, right]
+//   - img: The input image to be transformed
+//   - scalling: Controls the maximum radius of the points (1-100)
+//     Higher values create larger points but increase processing time
+//   - direction: Determines the traversal pattern of the algorithm:
+//     "up" - processes from bottom to top, left to right
+//     "down" - processes from top to bottom, right to left
+//     "left" - processes from right to left, bottom to top
+//     "right" - processes from left to right, bottom to top
 //
 // Returns:
 //   - image.Image

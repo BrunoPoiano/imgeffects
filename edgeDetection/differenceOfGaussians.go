@@ -9,14 +9,21 @@ import (
 )
 
 // DifferenceOfGaussians applies edge detection using the Difference of Gaussians (DoG) method.
+// The DoG algorithm works by subtracting two differently blurred versions of the original image.
+// Areas where pixel values change rapidly (edges) will be highlighted in the resulting image.
 //
 // Parameters:
-//   - img: The input image
-//   - img_one_blur: level of blur for the first image: 0 to 20
-//   - img_two_blur: level of blur for the second image: 0 to 20
+//   - img: The input image to perform edge detection on
+//   - img_one_blur: Blur intensity for the first Gaussian filter (range: 0 to 20)
+//     Lower values preserve more detail
+//   - img_two_blur: Blur intensity for the second Gaussian filter (range: 0 to 20)
+//     Higher values detect stronger edges
+//
+// The difference between the two blur intensities controls the size and type of
+// edges that will be detected. Larger differences highlight broader edges.
 //
 // Returns:
-//   - image.Image
+//   - image.Image: A grayscale image with detected edges
 func DifferenceOfGaussians(img image.Image, img_one_blur, img_two_blur int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewGray(bounds)

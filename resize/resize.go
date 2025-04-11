@@ -6,14 +6,17 @@ import (
 	"math"
 )
 
-// NewAspectRatio calculates the new height for an image while keeping the aspect ratio.
+// NewAspectRatio calculates the new dimensions for an image while preserving the aspect ratio.
+// Given a new target width, this function computes the proportionally correct height
+// to maintain the original image's proportions, preventing distortion.
 //
 // Parameters:
-//   - img: The input image
-//   - newWidth: The desired width of the resized image
+//   - img: The input image whose aspect ratio should be preserved
+//   - newWidth: The desired width of the resized image (in pixels)
 //
 // Returns:
-//   - newWidth, newHeight
+//   - int: The requested new width (same as input newWidth)
+//   - int: The calculated new height that preserves aspect ratio
 func NewAspectRatio(img image.Image, newWidth int) (int, int) {
 	imgBounds := img.Bounds()
 	aspectRatio := float64(newWidth) / float64(imgBounds.Dx())
@@ -23,11 +26,15 @@ func NewAspectRatio(img image.Image, newWidth int) (int, int) {
 }
 
 // NearestNeighbor resizes an image using nearest neighbor interpolation.
+// This is the simplest and fastest resizing algorithm that works by selecting
+// the color of the nearest pixel in the original image for each pixel in the
+// resized image. While efficient, it may produce pixelated results, especially
+// when significantly enlarging images.
 //
 // Parameters:
-//   - img: The input image
-//   - newWidth: The desired width of the resized image
-//   - newHeight: The desired height of the resized image
+//   - img: The input image to be resized
+//   - newWidth: The desired width of the resized image (in pixels)
+//   - newHeight: The desired height of the resized image (in pixels)
 //
 // Returns:
 //   - image.Image
@@ -48,11 +55,15 @@ func NearestNeighbor(img image.Image, newWidth, newHeight int) image.Image {
 }
 
 // BypolarInterpolate resizes an image using Bypolar interpolation.
+// This method calculates pixel values in the resized image by interpolating
+// between the four nearest pixels in the original image. It provides smoother
+// results compared to nearest neighbor interpolation, making it suitable for
+// both enlarging and reducing images while maintaining better visual quality.
 //
 // Parameters:
-//   - img: The input image
-//   - newWidth: The desired width of the resized image
-//   - newHeight: The desired height of the resized image
+//   - img: The input image to be resized
+//   - newWidth: The desired width of the resized image (in pixels)
+//   - newHeight: The desired height of the resized image (in pixels)
 //
 // Returns:
 //   - image.Image

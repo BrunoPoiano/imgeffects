@@ -8,15 +8,22 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// BlendingNoiseToImage applies a noise effect to an image.
+// BlendingNoiseToImage applies a noise effect to an image by blending the original image
+// with a generated noise pattern.
 //
 // Parameters:
-//   - img: The input image
-//   - alpha: The blending factor, ranging from 0 to 1
-//   - noiseType: The type of noise to apply: [gray, color, default]
+//   - img: The input image to which noise will be applied
+//   - alpha: The blending factor, ranging from 0 to 1. Higher values preserve more of
+//     the original image, while lower values add more noise
+//   - noiseType: The type of noise to generate and apply:
+//   - "gray": Grayscale noise (same intensity across R,G,B channels)
+//   - "color": RGB color noise with random values in each channel
+//   - any other value: Default noise pattern
 //
 // Returns:
 //   - image.Image
+//
+// The function uses parallel processing to efficiently apply the noise effect.
 func BlendingNoiseToImage(img image.Image, alpha float64, noiseType string) image.Image {
 
 	bounds := img.Bounds()

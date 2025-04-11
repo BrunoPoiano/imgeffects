@@ -8,12 +8,19 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// UnsharpMasking applies the Unsharp Masking algorithm filter to an image.
+// UnsharpMasking applies the Unsharp Masking algorithm to sharpen an image by subtracting
+// a blurred version from the original, enhancing fine details and edge definition.
+//
+// Unsharp masking works by creating a blurred copy of the image, then amplifying the
+// difference between the original and blurred version to enhance image details.
 //
 // Parameters:
-//   - img: The input image
-//   - variation: [0,1]: controls sharpening strength, where 0 is no effect and 1 is maximum
-//   - blurLevel: [1,10]: controls the amount of blur applied before applying the mask
+//   - img: The input image to be sharpened
+//   - variation: A value between 0.0 and 1.0 that controls sharpening intensity.
+//     At 0.0, no sharpening occurs, while 1.0 applies maximum sharpening effect.
+//   - blurLevel: An integer from 1 to 20 (clamped internally) that determines the
+//     radius of the Gaussian blur applied. Lower values produce finer detail enhancement,
+//     while higher values affect larger features.
 //
 // Returns:
 //   - image.Image

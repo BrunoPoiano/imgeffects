@@ -34,14 +34,20 @@ func sortColor(window []color.Color) color.Color {
 	}
 }
 
-// Median apply a median blur filter to a image.
+// Median applies a median blur filter to an image. The median filter works by replacing
+// each pixel with the median value from its surrounding neighborhood, which effectively
+// removes noise while preserving edges in the image.
 //
 // Parameters:
-//   - image
-//   - box: 3-30: the bigger the number it takes longer to process
+//   - img: The source image to be processed
+//   - box: Size of the filter kernel (square matrix), valid range 3-30.
+//     Larger values create stronger blurring effects but increase processing time.
+//     Values outside this range will be clamped.
 //
 // Returns:
 //   - image.Image
+//
+// Note: The implementation uses parallel execution to improve performance on multi-core systems.
 func Median(img image.Image, box int) image.Image {
 	bounds := img.Bounds()
 	box = utils.ClampGeneric(box, 3, 30)

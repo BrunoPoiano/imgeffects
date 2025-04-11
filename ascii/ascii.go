@@ -14,23 +14,29 @@ type AsciiImage struct {
 	Color      string
 }
 
-// GenerateAscii generate an ascii art based on the input image.
+// GenerateAscii converts an input image to ASCII art representation.
+//
+// The function maps pixel brightness values to characters from the provided
+// ASCII character set, where darker pixels use characters from the beginning
+// of the string and brighter pixels use characters from the end.
 //
 // Parameters:
-//   - img: The input image
-//   - asciiChars: string of ascii characters to use
-//   - newWidth: The desired width of the resized image
-//   - newHeight: The desired height of the resized image
-//   - useColor: if the ascii image should use color
+//   - img: The source image to convert to ASCII art
+//   - asciiChars: String of ASCII characters to use (ordered from darkest to lightest)
+//   - lineHeight: The vertical spacing between lines in the output
+//   - fontSize: The font size to use for ASCII characters
+//   - useColor: Whether to preserve the original image colors (true) or use white text (false)
 //
 // Returns:
+//   - A 2D slice of AsciiImage structs representing the converted image, where each element
+//     contains character, styling, and color information for a single position.
+//     Returns nil if asciiChars is empty.
 //
-//	[][]AsciiImage{
-//		Char       string
-//		FontSize   int
-//		LineHeight int
-//		Color      string
-//	}
+// Each AsciiImage in the result contains:
+//   - Char: The ASCII character for this position
+//   - FontSize: The calculated font size
+//   - LineHeight: The calculated line height
+//   - Color: CSS-compatible color string (RGB format or "#fff")
 func GenerateAscii(img image.Image, asciiChars string, lineHeight, fontSize int, useColor bool) [][]AsciiImage {
 
 	if len(asciiChars) == 0 || asciiChars == "" {

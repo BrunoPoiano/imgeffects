@@ -8,17 +8,19 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// KernelOperatorBased applies edge detection using a kernel operator.
+// KernelOperatorBased applies edge detection using various kernel operators to detect
+// edges and boundaries in an image. It works by calculating the gradient magnitude
+// in the x and y directions using convolution with the specified kernel.
 //
 // Supported kernels:
-//   - sobel
-//   - prewitt
-//   - robert-cross
-//   - scharr
+//   - sobel: Emphasizes edges with a balance between noise filtering and edge detection
+//   - prewitt: Similar to Sobel but with less emphasis on central pixels
+//   - robert-cross: Simple and fast operator that highlights high-frequency changes
+//   - scharr: Improved rotational symmetry over Sobel, better for detecting diagonal edges
 //
 // Parameters:
-//   - img: The input image
-//   - kernel: The name of the kernel to use
+//   - img: The input image to apply edge detection to
+//   - kernel: The name of the kernel operator to use (case-sensitive, must be one of the supported kernels)
 //
 // Returns:
 //   - image.Image

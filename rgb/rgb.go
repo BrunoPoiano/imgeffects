@@ -7,16 +7,21 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// adjustLevels manually adjust the red, green, and blue levels of an image.
+// AdjustLevels modifies the RGB color intensity of an image by applying scaling factors.
+//
+// Each color channel (red, green, blue) can be adjusted independently with percentage values.
+// The function automatically clamps input values to ensure they fall within the valid range
+// of 1-100, where 100 represents the original color intensity and lower values reduce intensity.
+// Alpha channel values remain unchanged.
 //
 // Parameters:
-//   - img: The input image
-//   - red: The desired red level (0-100)
-//   - green: The desired green level (0-100)
-//   - blue: The desired blue level (0-100)
+//   - img: The source image to be processed
+//   - red: Red channel intensity percentage (1-100)
+//   - green: Green channel intensity percentage (1-100)
+//   - blue: Blue channel intensity percentage (1-100)
 //
 // Returns:
-//   - image.Image
+//   - A new image.Image with adjusted RGB levels
 func AdjustLevels(img image.Image, red, green, blue int) image.Image {
 
 	red = utils.ClampGeneric(red, 1, 100)

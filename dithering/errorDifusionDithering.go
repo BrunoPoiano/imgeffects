@@ -9,25 +9,29 @@ import (
 )
 
 // ErrorDiffusionDithering applies an error diffusion dithering effect to an image.
+// This technique distributes the quantization error of a pixel to neighboring
+// pixels according to different distribution patterns defined by various algorithms.
 //
 // Supported algorithms:
-//   - floyd-steinberg
-//   - false-floyd-steinberg
-//   - jarvis-judice-ninke
-//   - stucki
-//   - atkinson
-//   - sierra
-//   - two-row-seirra
-//   - sierra-lite
-//   - none
+//   - floyd-steinberg: Classic algorithm with good balance of quality and performance
+//   - false-floyd-steinberg: Simplified version with fewer error terms
+//   - jarvis-judice-ninke: Higher quality with wider error distribution (12 neighboring pixels)
+//   - stucki: Modified Jarvis algorithm with improved weights
+//   - atkinson: Partial error distribution that preserves detail (only distributes 3/4 of error)
+//   - sierra: Good quality with moderate computational cost
+//   - two-row-seirra: Two-row variant of Sierra algorithm with reduced complexity
+//   - sierra-lite: Simplified one-row Sierra variant for faster processing
+//   - none: No error diffusion applied (simple quantization)
 //
 // Parameters:
-//   - img: The input image
-//   - algorithm: The name of the dithering algorithm to use
-//   - level: The number of quantization levels (1 - 10)
+//   - img: The input image to be processed
+//   - algorithm: The name of the dithering algorithm to use (case-sensitive)
+//   - level: The number of quantization levels per channel (1-10), where:
+//     Lower values (1-3) produce more posterized results with high contrast.
+//     Higher values (8-10) produce more subtle dithering with greater color depth.
 //
 // Returns:
-//   - image.Image
+//   - image.Image: A new RGBA image with the dithering effect applied
 func ErrorDifusionDithering(img image.Image, algorithm string, level int) image.Image {
 
 	level = utils.ClampGeneric(level, 1, 10)

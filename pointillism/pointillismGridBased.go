@@ -7,11 +7,17 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// PointillismGridBased transforms an image into a grid of points.
+// PointillismGridBased applies a pointillism effect to an image using a grid-based approach.
+//
+// It divides the image into a grid. For each grid cell, it calculates the average color
+// of a square region centered within that cell. It then draws a circle at the center
+// of the cell using this average color. The `radius` parameter controls the size of the
+// sampling region and the drawn circles, effectively determining the size of the "points".
 //
 // Parameters:
-//   - img: The input image
-//   - radius: size of the point: 1-20
+//   - img: The input image (image.Image) to process.
+//   - radius: An integer specifying the radius of the sampling area and the resulting points (circles).
+//     This value is automatically clamped between 1 and 20 (inclusive). Larger values result in larger points and a coarser effect.
 //
 // Returns:
 //   - image.Image
@@ -29,23 +35,36 @@ func PointillismGridBased(img image.Image, radius int) image.Image {
 
 			var grid []color.Color
 
-			for dy := 0; dy < radius; dy++ {
-				for dx := 0; dx < radius; dx++ {
-					px := x + dx - edge
-					py := y + dy - edge
+			startX := x - edge
+			startY := y - edge
+			endX := startX + radius
+			endY := startY + radius
 
-					grid = append(grid, img.At(px, py))
+			for curY := startY; curY < endY; curY++ {
+				for curX := startX; curX < endX; curX++ {
+					clampedX := utils.ClampGeneric(curX, bounds.Min.X, bounds.Max.X-1)
+					clampedY := utils.ClampGeneric(curY, bounds.Min.Y, bounds.Max.Y-1)
+					grid = append(grid, img.At(clampedX, clampedY))
 				}
 			}
 
-			c := utils.ColorAverage(grid)
+			var c color.Color
+			if len(grid) > 0 {
+				c = utils.ColorAverage(grid)
+			} else {
+				clampedX := utils.ClampGeneric(x, bounds.Min.X, bounds.Max.X-1)
+				clampedY := utils.ClampGeneric(y, bounds.Min.Y, bounds.Max.Y-1)
+				c = img.At(clampedX, clampedY)
+			}
 
 			for dy := -radius; dy <= radius; dy++ {
 				for dx := -radius; dx <= radius; dx++ {
 					if dx*dx+dy*dy <= radius_calc {
 						px := x + dx
 						py := y + dy
-						newImage.Set(px, py, c)
+						if px >= bounds.Min.X && px < bounds.Max.X && py >= bounds.Min.Y && py < bounds.Max.Y {
+							newImage.Set(px, py, c)
+						}
 					}
 				}
 			}

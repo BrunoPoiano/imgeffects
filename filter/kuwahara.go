@@ -64,14 +64,20 @@ func averageRGB(img image.Image, x1, y1, x2, y2 int) color.Color {
 	}
 }
 
-// KuwaharaFilter applies the Kuwahara filter to an image.
+// KuwaharaFilter applies the Kuwahara filter to an image for edge-preserving smoothing.
+// The filter works by dividing the area around each pixel into four quadrants,
+// calculating the standard deviation for each, and replacing the pixel with the
+// average color from the quadrant with the lowest standard deviation.
 //
 // Parameters:
-//   - img: The input image
-//   - size: Filter size from 1 to 20
+//   - img: The input image to be filtered
+//   - size: Filter window size (1-30). Larger values create a stronger smoothing effect.
+//     Values are automatically clamped to the valid range.
 //
 // Returns:
-//   - image.Image
+//   - image.Image: The filtered image with edge-preserving noise reduction
+//
+// The implementation uses parallel processing for improved performance.
 func KuwaharaFilter(img image.Image, size int) image.Image {
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y

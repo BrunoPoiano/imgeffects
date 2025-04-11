@@ -11,13 +11,19 @@ import (
 
 // LaplacianOfGaussian applies edge detection using the Laplacian of Gaussian (LoG) method.
 //
+// The LoG operator first applies Gaussian blur to reduce noise, then uses the Laplacian
+// operator to detect edges by finding zero crossings in the second derivative of the image.
+// This method is effective at finding edges and ignoring noise.
+//
 // Parameters:
-//   - img: The input image
-//   - blur_level: level of blur for the image: 0 to 20
-//   - scaling: scaling factor for the edge detection: 5 to 20
+//   - img: The input image to detect edges on
+//   - blur_level: Controls the Gaussian blur intensity (range: 0 to 20)
+//     Lower values preserve more detail, higher values reduce noise
+//   - scaling: Amplification factor for edge intensity (range: 5 to 20)
+//     Higher values make edges more pronounced in the output
 //
 // Returns:
-//   - image.Image
+//   - image.Image: A grayscale image with detected edges
 func LaplacianOfGaussian(img image.Image, blur_level int, scaling float64) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewGray(bounds)

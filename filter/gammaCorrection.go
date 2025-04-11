@@ -8,19 +8,35 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// GammaCorrection applies gamma correction to an image.
+// GammaCorrection applies a non-linear adjustment to image luminance by raising each color
+// channel to the power of gamma (output = input^gamma).
+//
+// This transformation affects the brightness and contrast of an image non-uniformly:
+//   - Gamma > 1: Darkens the image, with more effect on midtones than shadows
+//   - Gamma < 0: Inverts the gamma effect (uses 1/-gamma), brightening the image
+//   - Gamma = 0: Defaults to gamma = 1 (no change)
+//
+// The function clamps gamma values between -10 and 10 for predictable results.
+// Alpha channel values remain unchanged during the transformation.
 //
 // Parameters:
-//   - img: The input image
-//   - gamma: Gamma correction factor (> 1)
+//   - img: The source image to transform
+//   - gamma: Gamma correction factor (will be clamped to range [-10, 10])
 //
 // Returns:
 //   - image.Image
 func GammaCorrection(img image.Image, gamma float64) image.Image {
-
-	gamma = float64(utils.ClampGeneric(int(gamma), 1, 20))
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
+
+	gamma = float64(utils.ClampGeneric(int(gamma), -10, 10))
+	if gamma == 0 {
+		gamma = 1
+	}
+	effectiveGamma := gamma
+	if gamma < 0 {
+		effectiveGamma = 1.0 / -gamma
+	}
 
 	for y := 0; y < bounds.Max.Y; y++ {
 		for x := 0; x < bounds.Max.X; x++ {
@@ -28,7 +44,7 @@ func GammaCorrection(img image.Image, gamma float64) image.Image {
 
 			stretch := func(value uint32) uint16 {
 				normalized := float64(value) / 65535.0
-				corrected := math.Pow(normalized, gamma)
+				corrected := math.Pow(normalized, effectiveGamma)
 				return uint16(corrected * 65535)
 			}
 

@@ -8,15 +8,23 @@ import (
 	"github.com/BrunoPoiano/imgeffects/utils"
 )
 
-// OrderedDithering applies an ordered dithering effect to an image.
+// OrderedDithering applies an ordered dithering effect to an image using a Bayer matrix pattern.
+// Ordered dithering creates a retro visual effect by systematically applying threshold patterns
+// to reduce color depth while maintaining visual structure.
 //
 // Parameters:
-//   - img: The input image
-//   - level: The number of quantization levels (1 - 10)
-//   - size: The size of the dithering matrix (must be multiple of 2)
+//   - img: The input image to be processed
+//   - level: The number of quantization levels (1 - 20); higher values result in more color bands
+//     and less pronounced dithering effect. Values outside this range will be clamped.
+//   - size: The size of the dithering matrix (must be a power of 2, e.g., 2, 4, 8);
+//     larger matrices create more complex dithering patterns. Non-power-of-2 values
+//     will be adjusted to the next even number.
 //
 // Returns:
-//   - A new image.Image with the dithering effect applied
+//   - A new image.Image with the ordered dithering effect applied, in RGBA64 format
+//
+// Note: The alpha channel is also dithered by default. The function automatically
+// handles bounds checking and matrix size adjustments.
 func OrderedDithering(img image.Image, level, size int) image.Image {
 	bounds := img.Bounds()
 	newImage := image.NewRGBA64(bounds)
